@@ -3,7 +3,7 @@ from geopy.geocoders import Nominatim
 from datetime import datetime,timedelta
 import requests
 
-DARK_SKY_API_KEY = "YOUR DARK SKY API HERE"
+DARK_SKY_API_KEY = "YOUR DARK SKY API KEY HERE"
 option_list = "exclude=currently,minutely,hourly,alerts&units=si"
 
 class EZWController:
