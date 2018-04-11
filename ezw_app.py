@@ -29,3 +29,6 @@ def ezw():
        report_template = render_template('reports.html', weather_address=ezw_address, weather_reports=ezw_reports)
 
     return report_template  
+
+if __name__ == '__main__':
+    app.run(debug=False,host='0.0.0.0')   
