@@ -1,0 +1,111 @@
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link id="bs-css" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <link id="bsdp-css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+    <link id="weather-css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css" rel="stylesheet">    
+  <title>
+      EZW - EZ Weather Forecast
+  </title>
+  <style>
+        @keyframes spinner {
+        to {transform: rotate(360deg);}
+        }
+        
+        .spinner:before {
+        content: '';
+        box-sizing: border-box;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 30px;
+        height: 30px;
+        margin-top: -15px;
+        margin-left: -15px;
+        border-radius: 50%;
+        border: 1px solid #ccc;
+        border-top-color: #07d;
+        animation: spinner .6s linear infinite;
+        }
+  </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+                    <div class="col col-lg-12 col-sm-12">
+                        <h1>EZ Weather Forecast Tool</h1>
+                    </div>
+                    </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label style="width: 100%;">Date range
+                        <div id="ezw-dateinput">
+                                <div class="input-daterange input-group" id="datepicker">
+                                            <input type="text" class="input-sm form-control" name="date_from" id="date_from" />
+                                            <span class="input-group-addon">to</span>
+                                            <input type="text" class="input-sm form-control" name="date_to" id="date_to" />
+                                </div>
+                        </div>  
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <label style="width: 100%;">Location
+                    <input type="text" class="input-sm form-control" id="location" name="location" required>
+                </label>
+            </div> 
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <button type="button" class="btn btn-primary" id="gtw">Get the weather</button>
+            </div>        
+        </div>
+        <div class="row">
+                <div class="col-md-12">
+                    &nbsp;                    
+                </div>        
+        </div> 
+        <div class="row">
+                <div class="col-md-12" id="result">                    
+                </div>        
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+
+            $('#ezw-dateinput .input-daterange').datepicker({
+                format: "yyyy-mm-dd",
+                todayHighlight: true
+             });
+        
+            $('#gtw').click( function() 
+            {
+                var data ={};
+                data['location'] = $('#location').val();
+                data['date_from'] =  $('#date_from').val();
+                data['date_to'] =  $('#date_to').val();
+                
+                $('#result').empty();
+                $('#result').addClass('spinner');
+            
+                $.ajax({
+                    type : "POST",
+                    url : "{{ url_for('ezw') }}",
+                    data: JSON.stringify(data),
+                    contentType: 'application/json;charset=UTF-8',
+                    success: function(result) 
+                    {
+                        $('#result').removeClass('spinner');
+                        $('#result').html(result);
+                    }        
+                });                
+            }); 
+        });
+        
+    </script>
+</body>
+</html>
