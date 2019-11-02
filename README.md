@@ -2,7 +2,7 @@
 Easy Weather Forecast Single-Page Web App with Flask
 
 Full document: 
-http://www.codeastar.com/flask-easy-web-app-python
+http://www.codeastar.com/flask-easy-web-app-python/
 
 ## Quick start
 $cd ezw
